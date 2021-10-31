@@ -35,15 +35,17 @@ let meetup = {
   place: room,
 };
 
-// circular references
 room.occupiedBy = meetup;
 meetup.self = meetup;
-console.log(meetup);
-// console.log(room);
+
 console.log(
-  JSON.stringify(meetup, function replacer(key, value) {
-    return key != '' && value == meetup ? undefined : value;
-  })
+  JSON.stringify(
+    meetup,
+    function replacer(key, value) {
+      return key != '' && value == meetup ? undefined : value;
+    },
+    ' '
+  )
 );
 
 /* result should be:
