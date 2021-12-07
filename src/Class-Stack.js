@@ -18,41 +18,36 @@
 //  • Сложность: O(1).
 
 class Stack {
-  constructor(name) {
-    this.name = name;
+  #stack = [];
+
+  get stack() {
+    return this.#stack;
   }
-  stack = [];
+
   push(element, ...args) {
-    this.stack.push(element);
+    this.#stack.push(element);
     for (const element of args) {
-      this.stack.push(element);
+      this.#stack.push(element);
     }
   }
 
   pop() {
-    try {
-      if (this.stack.length === 0) {
-        throw new Error('Stack is empty');
-      }
-      console.log(this.stack.pop());
-    } catch (e) {
-      console.log('Error: ' + e.message);
+    let stackLength = this.#stack.length;
+    if (stackLength === 0) {
+      throw 'Stack is empty';
     }
+    return this.#stack.pop();
   }
 
   peek() {
-    try {
-      if (this.stack.length === 0) {
-        throw new Error('Stack is empty');
-      }
-      let stackLength = this.stack.length;
-      console.log(this.stack[stackLength - 1]);
-    } catch (e) {
-      console.log('Error: ' + e.message);
+    let stackLength = this.#stack.length;
+    if (stackLength === 0) {
+      throw 'Stack is empty';
     }
+    return this.#stack[stackLength - 1];
   }
 
   count() {
-    console.log(this.stack.length);
+    return this.#stack.length;
   }
 }
