@@ -20,10 +20,8 @@
 class Stack {
   #stack = [];
 
-  push(...args) {
-    for (const element of args) {
-      this.#stack.push(element);
-    }
+  push(element) {
+    this.#stack.push(element);
   }
 
   pop() {
