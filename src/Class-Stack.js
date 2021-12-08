@@ -20,28 +20,21 @@
 class Stack {
   #stack = [];
 
-  get stack() {
-    return this.#stack;
-  }
-
-  push(element, ...args) {
-    this.#stack.push(element);
+  push(...args) {
     for (const element of args) {
       this.#stack.push(element);
     }
   }
 
   pop() {
-    let stackLength = this.#stack.length;
-    if (stackLength === 0) {
+    if (this.#stack.length === 0) {
       throw 'Stack is empty';
     }
     return this.#stack.pop();
   }
 
   peek() {
-    let stackLength = this.#stack.length;
-    if (stackLength === 0) {
+    if (this.#stack.length === 0) {
       throw 'Stack is empty';
     }
     return this.#stack[stackLength - 1];
