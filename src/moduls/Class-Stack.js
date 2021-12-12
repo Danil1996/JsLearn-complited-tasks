@@ -22,19 +22,18 @@ module.exports = class Stack {
 
   push(element) {
     this.#stack.push(element);
-    return 'Element add on the top of stack';
   }
 
   pop() {
     if (this.#stack.length === 0) {
-      throw 'Stack is empty';
+      throw new Error('Stack is empty');
     }
     return this.#stack.pop();
   }
 
   peek() {
     if (this.#stack.length === 0) {
-      throw 'Stack is empty';
+      throw new Error('Stack is empty');
     }
     return this.#stack[this.#stack.length - 1];
   }
