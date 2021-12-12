@@ -7,18 +7,31 @@ const { assert } = require('chai');
 const stack = new Stack();
 
 describe('Class Stack implements the basic methods of the data structure stack', function () {
-  it('this function must add one element^on th top of stack', function () {
-    assert.equal(stack.push(1), 'Element add on the top of stack');
+  it('Class method (push) must add one element on th top of stack', function () {
+    const element = 1;
+    stack.push(element);
+    assert.equal(stack.pop(), element);
   });
-  it('this function must delete top element in stack and return it', function () {
-    stack.push(1);
-    assert.equal(stack.pop(), 1);
+  it('Class method (pop) must delete top element in stack and return it', function () {
+    const element = 2;
+    stack.push(element);
+    assert.equal(stack.pop(), element);
   });
-  it('this function must return top element of stack', function () {
-    stack.push(1);
-    assert.equal(stack.peek(), 1);
+  it('Class method (pop) must throw an exception, if stack is empty', function () {
+    assert.throw(() => stack.pop(), 'Stack is empty');
   });
-  it('this function must return amount of elements', function () {
-    console.log(assert.equal(stack.count(), 2));
+  it('Class method (peek) must return top element of stack', function () {
+    const element = 3;
+    stack.push(element);
+    assert.equal(stack.peek(), element);
+    stack.pop();
+  });
+  it('Class method (peek) must throw an exception, if stack is empty', function () {
+    assert.throw(() => stack.peek(), 'Stack is empty');
+  });
+  it('Class method (count) must return amount of elements', function () {
+    const element = 1;
+    stack.push(element);
+    assert.equal(stack.count(), 1);
   });
 });
