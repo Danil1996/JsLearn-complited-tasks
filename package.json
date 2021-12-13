@@ -1,0 +1,23 @@
+{
+  "name": "jslearn-complited-tasks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/modules/stack.js",
+  "scripts": {
+    "test": "mocha ./src/modules/stack.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Danil1996/JsLearn-complited-tasks.git"
+  },
+  "author": "Danil_belinskii",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Danil1996/JsLearn-complited-tasks/issues"
+  },
+  "homepage": "https://github.com/Danil1996/JsLearn-complited-tasks#readme",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^9.1.3"
+  }
+}

@@ -1,6 +1,6 @@
 'use strict';
 
-const Stack = require('./Class-Stack.js');
+const Stack = require('./stack.js');
 const Chai = require('chai');
 const { assert } = require('chai');
 
