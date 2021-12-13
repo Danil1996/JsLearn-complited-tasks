@@ -1,10 +1,10 @@
 {
-  "name": "src",
+  "name": "Class-stack",
   "version": "1.0.0",
   "description": "",
-  "main": "Class-Stack.js",
+  "main": "./moduls/Class-Stack.js",
   "scripts": {
-    "test": "mocha Class-Stack-test.js"
+    "test": "mocha ./moduls/Class-Stack.test.js"
   },
   "author": "",
   "license": "ISC",
