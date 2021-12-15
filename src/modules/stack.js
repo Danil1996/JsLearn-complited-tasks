@@ -16,9 +16,9 @@
 // Метод count
 //  • Поведение: Возвращает количество элементов в стеке.
 //  • Сложность: O(1).
-
-class Stack {
+module.exports = class Stack {
   #stack = [];
+  constructor() {}
 
   push(element) {
     this.#stack.push(element);
@@ -26,19 +26,19 @@ class Stack {
 
   pop() {
     if (this.#stack.length === 0) {
-      throw 'Stack is empty';
+      throw new Error('Stack is empty');
     }
     return this.#stack.pop();
   }
 
   peek() {
     if (this.#stack.length === 0) {
-      throw 'Stack is empty';
+      throw new Error('Stack is empty');
     }
-    return this.#stack[stackLength - 1];
+    return this.#stack[this.#stack.length - 1];
   }
 
   count() {
     return this.#stack.length;
   }
-}
+};
