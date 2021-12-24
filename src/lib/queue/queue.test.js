@@ -15,6 +15,7 @@ describe('Class Queue implements the basic methods of the data structure queue',
       queue.dequeue();
     });
   });
+
   describe('Method check (dequeue)', () => {
     const firstElement = 1;
     const secondElement = 2;
@@ -31,6 +32,7 @@ describe('Class Queue implements the basic methods of the data structure queue',
       assert.throw(() => queue.dequeue(), 'Queue is empty');
     });
   });
+
   describe('Method check (peek)', () => {
     const element = 2;
     it('Class method (peek) must return first element of the list', () => {
@@ -44,6 +46,7 @@ describe('Class Queue implements the basic methods of the data structure queue',
       assert.throw(() => queue.peek(), 'Queue is empty');
     });
   });
+
   describe('Method check (count)', () => {
     it('Class method (count) must return amount of elements', () => {
       const element = 1;
