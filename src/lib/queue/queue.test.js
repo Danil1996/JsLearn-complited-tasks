@@ -28,6 +28,9 @@ describe('Class Queue implements the basic methods of the data structure queue',
       assert.notEqual(queue.peek(), firstElement);
       queue.dequeue();
     });
+    it('Checking is queue really empty', () => {
+      assert.equal(queue.count(), 0);
+    });
     it('Class method (pop) must throw an exception, if queue is empty', () => {
       assert.throw(() => queue.dequeue(), 'Queue is empty');
     });
@@ -35,12 +38,18 @@ describe('Class Queue implements the basic methods of the data structure queue',
 
   describe('Method check (peek)', () => {
     const element = 2;
+    const second_element = 3;
     it('Class method (peek) must return first element of the list', () => {
       queue.enqueue(element);
+      queue.enqueue(second_element);
       assert.equal(queue.peek(), element);
     });
     it('checking if the item is still in place', () => {
       assert.equal(queue.dequeue(), element);
+    });
+    it('Checking is queue really empty', () => {
+      queue.dequeue();
+      assert.equal(queue.count(), 0);
     });
     it('Class method (peek) must throw an exception, if queue is empty', () => {
       assert.throw(() => queue.peek(), 'Queue is empty');
@@ -48,10 +57,14 @@ describe('Class Queue implements the basic methods of the data structure queue',
   });
 
   describe('Method check (count)', () => {
-    it('Class method (count) must return amount of elements', () => {
+    it('Class method (count) must return amount of elements, in this test we add one item and expect the number of items = 1 ', () => {
       const element = 1;
       queue.enqueue(element);
       assert.equal(queue.count(), 1);
+    });
+    it('Class method (count) must return amount of elements, in this test we delete one item and expect the number of items = 0', () => {
+      queue.dequeue();
+      assert.equal(queue.count(), 0);
     });
   });
 });
