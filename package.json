@@ -4,8 +4,7 @@
   "description": "",
   "main": "./src/index.js",
   "scripts": {
-    "test_stack": "mocha ./src/lib/stack/stack.test.js",
-    "test_queue": "mocha ./src/lib/queue/queue.test.js"
+    "test": "mocha \"./{,!(node_modules)/**/}*.test.js\""
   },
   "repository": {
     "type": "git",
