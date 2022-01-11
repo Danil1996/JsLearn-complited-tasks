@@ -31,7 +31,7 @@ describe('Class Queue implements the basic methods of the data structure queue',
     it('Checking is queue really empty', () => {
       assert.equal(queue.count(), 0);
     });
-    it('Class method (pop) must throw an exception, if queue is empty', () => {
+    it('Class method (dequeue) must throw an exception, if queue is empty', () => {
       assert.throw(() => queue.dequeue(), 'Queue is empty');
     });
   });
