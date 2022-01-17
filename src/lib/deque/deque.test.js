@@ -1,7 +1,6 @@
 'use strict';
 
 const Deque = require('./deque.js');
-const Chai = require('chai');
 const { assert } = require('chai');
 
 const deque = new Deque();
@@ -36,10 +35,8 @@ describe('Class Deque implements the basic methods of the data structure double-
     it('Checking if the element has really been removed from the deque', () => {
       assert.notEqual(deque.dequeueFirst(), secondElement);
     });
-    it('Checking is deque really empty', () => {
-      assert.equal(deque.count(), 0);
-    });
     it('Class method (dequeueFisrt) must throw an exception, if deque is empty', () => {
+      assert.equal(deque.count(), 0);
       assert.throw(() => deque.dequeueFirst(), 'Deque is empty');
     });
   });
@@ -55,30 +52,26 @@ describe('Class Deque implements the basic methods of the data structure double-
     it('Checking if the element has really been removed from the deque', () => {
       assert.notEqual(deque.dequeueLast(), secondElement);
     });
-    it('Checking is deque really empty', () => {
-      assert.equal(deque.count(), 0);
-    });
     it('Class method (dequeueLast) must throw an exception, if deque is empty', () => {
+      assert.equal(deque.count(), 0);
       assert.throw(() => deque.dequeueLast(), 'Deque is empty');
     });
   });
 
   describe('Method check (peekFirst)', () => {
     const element = 2;
-    const second_element = 3;
+    const secondElement = 3;
     it('Class method (peekFirst) must return first element of the deque', () => {
       deque.enqueueFirst(element);
-      deque.enqueueFirst(second_element);
-      assert.equal(deque.peekFirst(), second_element);
+      deque.enqueueFirst(secondElement);
+      assert.equal(deque.peekFirst(), secondElement);
     });
     it('checking if the item is still in place', () => {
-      assert.equal(deque.dequeueFirst(), second_element);
-    });
-    it('Checking is deque really empty', () => {
-      deque.dequeueFirst();
-      assert.equal(deque.count(), 0);
+      assert.equal(deque.dequeueFirst(), secondElement);
     });
     it('Class method (peekFirst) must throw an exception, if deque is empty', () => {
+      deque.dequeueFirst();
+      assert.equal(deque.count(), 0);
       assert.throw(() => deque.peekFirst(), 'Deque is empty');
     });
   });
@@ -94,11 +87,9 @@ describe('Class Deque implements the basic methods of the data structure double-
     it('checking if the item is still in place', () => {
       assert.equal(deque.dequeueLast(), second_element);
     });
-    it('Checking is deque really empty', () => {
+    it('Class method (peekFirst) must throw an exception, if deque is empty', () => {
       deque.dequeueLast();
       assert.equal(deque.count(), 0);
-    });
-    it('Class method (peekFirst) must throw an exception, if deque is empty', () => {
       assert.throw(() => deque.peekLast(), 'Deque is empty');
     });
   });

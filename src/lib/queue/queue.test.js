@@ -28,10 +28,8 @@ describe('Class Queue implements the basic methods of the data structure queue',
       assert.notEqual(queue.peek(), firstElement);
       queue.dequeue();
     });
-    it('Checking is queue really empty', () => {
-      assert.equal(queue.count(), 0);
-    });
     it('Class method (dequeue) must throw an exception, if queue is empty', () => {
+      assert.equal(queue.count(), 0);
       assert.throw(() => queue.dequeue(), 'Queue is empty');
     });
   });
@@ -47,11 +45,9 @@ describe('Class Queue implements the basic methods of the data structure queue',
     it('checking if the item is still in place', () => {
       assert.equal(queue.dequeue(), element);
     });
-    it('Checking is queue really empty', () => {
+    it('Class method (peek) must throw an exception, if queue is empty', () => {
       queue.dequeue();
       assert.equal(queue.count(), 0);
-    });
-    it('Class method (peek) must throw an exception, if queue is empty', () => {
       assert.throw(() => queue.peek(), 'Queue is empty');
     });
   });
