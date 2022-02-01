@@ -2,9 +2,9 @@
   "name": "jslearn-complited-tasks",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/modules/stack.js",
+  "main": "./src/index.js",
   "scripts": {
-    "test": "mocha ./src/modules/stack.test.js"
+    "test": "mocha \"./{,!(node_modules)/**/}*.test.js\""
   },
   "repository": {
     "type": "git",
