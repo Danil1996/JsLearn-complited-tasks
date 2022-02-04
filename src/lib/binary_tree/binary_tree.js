@@ -26,15 +26,14 @@ module.exports = class BinarySearchTree {
 
   contains(element) {
     let temporaryLink = this.#binaryTree;
-    let whichChild;
     while ('value' in temporaryLink) {
       if (temporaryLink.value === element) {
-        return [true, whichChild];
+        return true;
       }
       temporaryLink =
         temporaryLink.value > element
-          ? ((whichChild = 'leftChild'), temporaryLink.leftChild)
-          : ((whichChild = 'rightChild'), temporaryLink.rightChild);
+          ? temporaryLink.leftChild
+          : temporaryLink.rightChild;
     }
     return false;
   }
