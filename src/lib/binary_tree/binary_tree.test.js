@@ -10,24 +10,22 @@ describe('Class Binary Search Tree implements the basic methods of abstract data
   const secondElement = 7;
   const thirdElement = 15;
   const fourthElement = 4;
-  describe('Method (add), must add the element to tree according to the rule: ', () => {
-    it('1. If the tree is empty, the added element becomes the root node', () => {
+  describe('Method (add), must add the element to tree and increment counter ', () => {
+    it('Cheking if the tree is empty', () => {
+      assert.equal(bin.count(), 0);
+    });
+    it('Checking an element is added to the tree', () => {
       bin.add(firstElement);
+      assert.equal(bin.contains(firstElement), true);
+    });
+    it('Cheking if the counter has increment', () => {
       assert.equal(bin.count(), 1);
-    });
-    it('2. If the element being added is less than the root node, then it must become its left child', () => {
-      bin.add(secondElement);
-      assert.equal(bin.contains(secondElement)[1], 'leftChild');
-    });
-    it('3. If the element being added is greater than or equal to the root node, then it must become its right child', () => {
-      bin.add(thirdElement);
-      assert.equal(bin.contains(thirdElement)[1], 'rightChild');
     });
   });
 
   describe('Method (contains), should return a boolean value depending on whether the value is in the tree or not', () => {
     it('If value is in the tree', () => {
-      assert.isTrue(bin.contains(secondElement)[0]);
+      assert.isTrue(bin.contains(firstElement));
     });
     it('If value isnt in the tree', () => {
       assert.isFalse(bin.contains(fourthElement));
@@ -35,8 +33,8 @@ describe('Class Binary Search Tree implements the basic methods of abstract data
   });
 
   describe('Method (count), must return amount of elements in the tree', () => {
-    it('If there are any elements in the tree. Now there are 3 elements in the tree', () => {
-      assert.equal(bin.count(), 3);
+    it('If there are any elements in the tree. Now there are 1 elements in the tree', () => {
+      assert.equal(bin.count(), 1);
     });
     it('If the tree is empty', () => {
       bin.clear();
