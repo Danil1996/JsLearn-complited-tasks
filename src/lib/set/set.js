@@ -3,50 +3,51 @@
 class MySet {
   set = [];
 
-  constructor(...initialElements) {
-    this.set = initialElements.filter(
-      (item, index) => initialElements.indexOf(item) === index
-    );
+  constructor(...initialValuesInArray) {
+    this.set = initialValuesInArray.flat();
+    this.set = this.setSorting(this.duplicateCleaning(this.set));
   }
 
+  // This is basic methods of the class Set
+
+  duplicateCleaning(array) {
+    return array.filter((item, index) => array.indexOf(item) === index);
+  }
+
+  setSorting(set) {
+    return set.sort((a, b) => a - b);
+  }
   add(element) {
-    let numberOfMatches = 0;
-    for (const value in this.set) {
-      if (this.set[value] === element) {
-        ++numberOfMatches;
-      }
-    }
-    if (numberOfMatches > 0) {
+    if (this.set.includes(element)) {
       throw new Error('This set already has this element');
-    } else {
-      this.set.push(element);
-      this.set.sort((a, b) => a - b);
     }
+    this.set.push(element);
+    setSorting(this.set);
   }
 
   addRange(...array) {
-    for (const value in array) {
-      this.add(array[value], set);
-    }
+    array.forEach((item) => {
+      this.add(item);
+    });
   }
 
-  remov(element) {
-    for (const value in this.set) {
-      if (this.set[value] === element) {
-        this.set.splice(value, 1);
-        return true;
-      }
+  remov(element, set = this.set) {
+    const indexOfSearchingElement = set.indexOf(element);
+    if (indexOfSearchingElement === -1) {
+      return false;
+    } else {
+      set.splice(indexOfSearchingElement, 1);
+      return true;
     }
-    return false;
   }
 
   contains(element) {
-    for (const value in this.set) {
-      if (this.set[value] === element) {
-        return true;
-      }
+    const searchingElement = this.set.indexOf(element);
+    if (searchingElement === -1) {
+      return false;
+    } else {
+      return true;
     }
-    return false;
   }
 
   count() {
@@ -57,47 +58,92 @@ class MySet {
     this.set = [];
   }
 
+  // This methods for iteration
+
+  [Symbol.iterator]() {
+    return new Iterator(this);
+  }
+  getElement(index) {
+    return this.set[index];
+  }
+
+  // This is basic algorithms
+
   union(otherSet, currentSet = this.set) {
-    const unionResult = this.setCopy(currentSet);
-    for (const value in otherSet) {
-      unionResult.push(otherSet[value]);
-    }
-    return unionResult.filter(
-      (item, index) => unionResult.indexOf(item) === index
-    );
+    let concatArray = [];
+    const result = concatArray.concat(...otherSet, ...currentSet);
+
+    return new MySet(result);
   }
 
   intersection(otherSet, currentSet = this.set) {
-    const intersectionResult = this.setCopy(currentSet);
-    for (const value in otherSet) {
-      intersectionResult.push(otherSet[value]);
-    }
-    return intersectionResult.filter(
-      (item, index) => intersectionResult.indexOf(item) !== index
+    let concatArray = [];
+    const result = concatArray.concat(...otherSet, ...currentSet);
+    return new MySet(
+      result.filter((item, index) => result.indexOf(item) !== index)
     );
   }
 
   difference(otherSet, currentSet = this.set) {
     const differenceResult = this.setCopy(currentSet);
     const intersectionResult = this.intersection(otherSet);
-    for (let index = 0; index < differenceResult.length; index++) {
-      const element = differenceResult[index];
-      for (const value in intersectionResult) {
-        if (element === intersectionResult[value]) {
-          differenceResult.splice(index, 1);
-          --index;
-        }
-      }
+    for (const value of intersectionResult) {
+      this.remov(value, differenceResult);
     }
-    return differenceResult;
+    return new MySet(differenceResult);
   }
+
   symmetricDifference(otherSet, currentSet = this.set) {
-    const otherSetResult = this.difference(otherSet, currentSet);
-    const currentSetResult = this.difference(currentSet, otherSet);
-    return otherSetResult.concat(currentSetResult);
+    const unionResult = this.union(otherSet, currentSet);
+    const intersectionResult = this.intersection(otherSet, currentSet);
+
+    return this.difference(intersectionResult, unionResult);
   }
+  isSubSet(otherSet, currentSet = this.set) {
+    const copyResult = this.setCopy(otherSet);
+    const intersectionResult = this.setCopy(
+      this.intersection(currentSet, copyResult)
+    );
+    if (intersectionResult.length) {
+      for (const value of copyResult) {
+        this.remov(value, intersectionResult);
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   setCopy(set) {
-    const copyResult = set.slice();
-    return copyResult;
+    const resultOfCopy = [];
+    for (const value of set) {
+      resultOfCopy.push(value);
+    }
+    return resultOfCopy;
+  }
+}
+
+class Iterator {
+  object;
+  nextIndex;
+
+  constructor(object) {
+    this.object = object;
+    this.nextIndex = 0;
+  }
+
+  next() {
+    if (this.nextIndex === this.object.set.length) {
+      return { done: true };
+    }
+
+    const result = {
+      value: this.object.getElement(this.nextIndex),
+      done: false,
+    };
+
+    this.nextIndex++;
+
+    return result;
   }
 }
