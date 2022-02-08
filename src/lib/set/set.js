@@ -5,16 +5,20 @@ class MySet {
 
   constructor(...initialValuesInArray) {
     this.set = initialValuesInArray.flat();
-    this.set = this.setSorting(this.duplicateCleaning(this.set));
+    this.set = this.sortSet(this.removeDuplicates(this.set));
   }
 
   // This is basic methods of the class Set
 
-  duplicateCleaning(array) {
+  removeDuplicates(array) {
     return array.filter((item, index) => array.indexOf(item) === index);
   }
 
-  setSorting(set) {
+  getDuplicates(array) {
+    return array.filter((item, index) => array.indexOf(item) !== index);
+  }
+
+  sortSet(set) {
     return set.sort((a, b) => a - b);
   }
   add(element) {
@@ -22,7 +26,7 @@ class MySet {
       throw new Error('This set already has this element');
     }
     this.set.push(element);
-    setSorting(this.set);
+    this.sortSet(this.set);
   }
 
   addRange(...array) {
@@ -31,12 +35,12 @@ class MySet {
     });
   }
 
-  remov(element, set = this.set) {
-    const indexOfSearchingElement = set.indexOf(element);
+  remove(element) {
+    const indexOfSearchingElement = this.set.indexOf(element);
     if (indexOfSearchingElement === -1) {
       return false;
     } else {
-      set.splice(indexOfSearchingElement, 1);
+      this.set.splice(indexOfSearchingElement, 1);
       return true;
     }
   }
@@ -69,57 +73,45 @@ class MySet {
 
   // This is basic algorithms
 
-  union(otherSet, currentSet = this.set) {
+  union(otherSet) {
     let concatArray = [];
-    const result = concatArray.concat(...otherSet, ...currentSet);
+    const result = concatArray.concat(...otherSet, this.set);
 
     return new MySet(result);
   }
 
-  intersection(otherSet, currentSet = this.set) {
+  intersection(otherSet) {
     let concatArray = [];
-    const result = concatArray.concat(...otherSet, ...currentSet);
-    return new MySet(
-      result.filter((item, index) => result.indexOf(item) !== index)
-    );
+    const result = concatArray.concat(...otherSet, this.set);
+    return new MySet(this.getDuplicates(result));
   }
 
-  difference(otherSet, currentSet = this.set) {
-    const differenceResult = this.setCopy(currentSet);
+  difference(otherSet) {
+    const newSet = new MySet(this.set);
     const intersectionResult = this.intersection(otherSet);
     for (const value of intersectionResult) {
-      this.remov(value, differenceResult);
+      newSet.remove(value);
     }
-    return new MySet(differenceResult);
+    return newSet;
   }
 
-  symmetricDifference(otherSet, currentSet = this.set) {
-    const unionResult = this.union(otherSet, currentSet);
-    const intersectionResult = this.intersection(otherSet, currentSet);
-
-    return this.difference(intersectionResult, unionResult);
+  symmetricDifference(otherSet) {
+    let concatArray = [];
+    const newSet = new MySet(concatArray.concat(...otherSet, this.set));
+    const intersectionResult = this.intersection(otherSet);
+    for (const value of intersectionResult) {
+      newSet.remove(value);
+    }
+    return newSet;
   }
-  isSubSet(otherSet, currentSet = this.set) {
-    const copyResult = this.setCopy(otherSet);
-    const intersectionResult = this.setCopy(
-      this.intersection(currentSet, copyResult)
-    );
-    if (intersectionResult.length) {
-      for (const value of copyResult) {
-        this.remov(value, intersectionResult);
+
+  isSubSet(otherSet) {
+    for (const value of otherSet) {
+      if (!this.contains(value)) {
+        return false;
       }
-      return true;
-    } else {
-      return false;
     }
-  }
-
-  setCopy(set) {
-    const resultOfCopy = [];
-    for (const value of set) {
-      resultOfCopy.push(value);
-    }
-    return resultOfCopy;
+    return true;
   }
 }
 
