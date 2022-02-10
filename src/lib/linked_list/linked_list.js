@@ -5,7 +5,6 @@ class LinkedList {
   counter = 0;
   constructor() {}
 
-  // Добавляет элемент в конец списка.
   add(element) {
     let temporaryLink = this.list;
     while ('value' in temporaryLink) {
@@ -19,21 +18,27 @@ class LinkedList {
     ++this.counter;
   }
 
-  // Удаляет первый элемент списка со значением, равным переданному. Возвращает true, если элемент был удален и false в противном случае.
-  remov(element) {
-    let temporaryLink = this.list;
-    while ('value' in temporaryLink) {
-      if (temporaryLink.value === element) {
+  remove(element) {
+    // If searching element first in list
+    if (this.list.value === element) {
+      this.list = this.list.next;
+      --this.counter;
+      return true;
+    }
+    // if searching element deep inside the list
+    let tempoparyLink = this.list;
+    while ('value' in tempoparyLink) {
+      if (tempoparyLink.next.value === element) {
+        tempoparyLink.next = tempoparyLink.next.next;
+        --this.counter;
         return true;
-      } else if (temporaryLink.value !== element) {
-        temporaryLink = temporaryLink.next;
-      } else {
-        return false;
+      } else if (tempoparyLink.value !== element) {
+        tempoparyLink = tempoparyLink.next;
       }
     }
+    return false;
   }
 
-  // Возвращает true или false в зависимости от того, присутствует ли искомый элемент в списке.
   containse(element) {
     let temporaryLink = this.list;
     while ('value' in temporaryLink) {
@@ -47,22 +52,21 @@ class LinkedList {
     }
   }
 
-  // Возвращает количество элементов списка. Возвращает 0, если список пустой.
   count() {
     return this.counter;
   }
 
-  // Копирует содержимое списка в указанный массив, начиная с указанного индекса.
-  copyTo(array, startingIndex) {}
+  copyTo(array) {
+    let temporaryLink = this.list;
+    while ('value' in temporaryLink) {
+      array.push(temporaryLink.value);
+      temporaryLink = temporaryLink.next;
+    }
+    return array;
+  }
 
-  // Удаляет все элементы из списка.
-  clear() {}
+  clear() {
+    this.list = {};
+    this.counter = 0;
+  }
 }
-
-const list = new LinkedList();
-list.add(1);
-list.add(2);
-list.add(5);
-list.add('string');
-
-console.log(list.containse('string'));
