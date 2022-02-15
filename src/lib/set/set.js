@@ -3,13 +3,35 @@
 class MySet {
   set = [];
 
+  [Symbol.iterator]() {
+    return this;
+  }
+
+  next() {
+    if (this.current === undefined) {
+      this.current = this.set[0];
+      this.last = this.set[this.set.length - 1];
+    }
+
+    if (this.current <= this.last) {
+      return {
+        done: false,
+        value: this.current++,
+      };
+    } else {
+      delete this.current;
+      return {
+        done: true,
+      };
+    }
+  }
+
   constructor(...initialValuesInArray) {
     this.set = initialValuesInArray.flat();
     this.set = this.sortSet(this.removeDuplicates(this.set));
   }
 
   // This is basic methods of the class Set
-
   removeDuplicates(array) {
     return array.filter((item, index) => array.indexOf(item) === index);
   }
@@ -62,21 +84,10 @@ class MySet {
     this.set = [];
   }
 
-  // This methods for iteration
-
-  [Symbol.iterator]() {
-    return new Iterator(this);
-  }
-  getElement(index) {
-    return this.set[index];
-  }
-
   // This is basic algorithms
-
   union(otherSet) {
     let concatArray = [];
     const result = concatArray.concat(...otherSet, this.set);
-
     return new MySet(result);
   }
 
@@ -112,30 +123,5 @@ class MySet {
       }
     }
     return true;
-  }
-}
-
-class Iterator {
-  object;
-  nextIndex;
-
-  constructor(object) {
-    this.object = object;
-    this.nextIndex = 0;
-  }
-
-  next() {
-    if (this.nextIndex === this.object.set.length) {
-      return { done: true };
-    }
-
-    const result = {
-      value: this.object.getElement(this.nextIndex),
-      done: false,
-    };
-
-    this.nextIndex++;
-
-    return result;
   }
 }
