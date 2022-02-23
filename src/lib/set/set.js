@@ -1,7 +1,7 @@
 'use strict';
 
 class MySet {
-  set = [];
+  #set = [];
 
   [Symbol.iterator]() {
     return this;
@@ -9,8 +9,8 @@ class MySet {
 
   next() {
     if (this.current === undefined) {
-      this.current = this.set[0];
-      this.last = this.set[this.set.length - 1];
+      this.current = this.#set[0];
+      this.last = this.#set[this.#set.length - 1];
     }
 
     if (this.current <= this.last) {
@@ -27,28 +27,30 @@ class MySet {
   }
 
   constructor(...initialValuesInArray) {
-    this.set = initialValuesInArray.flat();
-    this.set = this.sortSet(this.removeDuplicates(this.set));
+    this.#set = initialValuesInArray.flat();
+    this.#set = this.#sortSet(this.#removeDuplicates(this.#set));
   }
 
   // This is basic methods of the class Set
-  removeDuplicates(array) {
+  #removeDuplicates(array) {
     return array.filter((item, index) => array.indexOf(item) === index);
   }
 
-  getDuplicates(array) {
+  #getDuplicates(array) {
     return array.filter((item, index) => array.indexOf(item) !== index);
   }
 
-  sortSet(set) {
+  #sortSet(set) {
     return set.sort((a, b) => a - b);
   }
+
+  //Basic methods for interfeis
   add(element) {
-    if (this.set.includes(element)) {
+    if (this.#set.includes(element)) {
       throw new Error('This set already has this element');
     }
-    this.set.push(element);
-    this.sortSet(this.set);
+    this.#set.push(element);
+    this.#sortSet(this.#set);
   }
 
   addRange(...array) {
@@ -58,17 +60,17 @@ class MySet {
   }
 
   remove(element) {
-    const indexOfSearchingElement = this.set.indexOf(element);
+    const indexOfSearchingElement = this.#set.indexOf(element);
     if (indexOfSearchingElement === -1) {
       return false;
     } else {
-      this.set.splice(indexOfSearchingElement, 1);
+      this.#set.splice(indexOfSearchingElement, 1);
       return true;
     }
   }
 
   contains(element) {
-    const searchingElement = this.set.indexOf(element);
+    const searchingElement = this.#set.indexOf(element);
     if (searchingElement === -1) {
       return false;
     } else {
@@ -77,28 +79,28 @@ class MySet {
   }
 
   count() {
-    return this.set.length;
+    return this.#set.length;
   }
 
   clear() {
-    this.set = [];
+    this.#set = [];
   }
 
   // This is basic algorithms
   union(otherSet) {
     let concatArray = [];
-    const result = concatArray.concat(...otherSet, this.set);
+    const result = concatArray.concat(...otherSet, this.#set);
     return new MySet(result);
   }
 
   intersection(otherSet) {
     let concatArray = [];
-    const result = concatArray.concat(...otherSet, this.set);
-    return new MySet(this.getDuplicates(result));
+    const result = concatArray.concat(...otherSet, this.#set);
+    return new MySet(this.#getDuplicates(result));
   }
 
   difference(otherSet) {
-    const newSet = new MySet(this.set);
+    const newSet = new MySet(this.#set);
     const intersectionResult = this.intersection(otherSet);
     for (const value of intersectionResult) {
       newSet.remove(value);
@@ -108,7 +110,7 @@ class MySet {
 
   symmetricDifference(otherSet) {
     let concatArray = [];
-    const newSet = new MySet(concatArray.concat(...otherSet, this.set));
+    const newSet = new MySet(concatArray.concat(...otherSet, this.#set));
     const intersectionResult = this.intersection(otherSet);
     for (const value of intersectionResult) {
       newSet.remove(value);
@@ -125,3 +127,10 @@ class MySet {
     return true;
   }
 }
+
+const set = new MySet([1, 2, 3, 4]);
+const set1 = new MySet([3, 4, 5, 6]);
+
+const set3 = set.union(set1);
+
+console.log(set3.contains(2));
