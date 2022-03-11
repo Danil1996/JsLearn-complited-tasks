@@ -30,7 +30,6 @@ module.exports = class MongoAdapter {
    */
   async read(userId) {
     const result = await this.#client.findOne(userId);
-
     if (result) {
       return result;
     }
@@ -44,7 +43,7 @@ module.exports = class MongoAdapter {
    */
   async readList(objUserFilter) {
     const result = this.#client.find(objUserFilter);
-    console.log('🚀 - MongoAdapter - result', result);
+
     const allValues = await result.toArray();
     if (result) {
       return allValues;
