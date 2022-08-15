@@ -1,8 +1,5 @@
-'use strict';
-
-module.exports = class Queue {
+class Queue {
   #queue = [];
-  constructor() {}
 
   enqueue(element) {
     this.#queue.push(element);
@@ -26,3 +23,5 @@ module.exports = class Queue {
     return this.#queue.length;
   }
 };
+
+module.exports = Queue
